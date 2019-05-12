@@ -3,47 +3,47 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CoderView">
-    <TextField fx:id="gramaField" layoutX="22.0" layoutY="49.0" prefHeight="25.0" prefWidth="57.0"/>
-    <TextField fx:id="alphaField" layoutX="91.0" layoutY="49.0" prefHeight="25.0" prefWidth="57.0"/>
-    <Button layoutX="176.0" layoutY="33.0" mnemonicParsing="false" onAction="#genHandle" prefHeight="43.0"
-            prefWidth="91.0" text="Generate Key"/>
-    <Label layoutX="290.0" layoutY="32.0" text="KEY:"/>
-    <Label layoutX="22.0" layoutY="24.0" text="grama size"/>
-    <Label layoutX="91.0" layoutY="24.0" text="alphabet size"/>
-    <ScrollPane layoutX="324.0" layoutY="33.0" prefHeight="157.0" prefWidth="174.0">
-        <Text fx:id="keyArea" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-            <font>
-                <Font name="System Bold" size="12.0"/>
-            </font>
+<AnchorPane prefHeight="419.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CoderView">
+    <TextField fx:id="gramaField" layoutX="160.0" layoutY="74.0" prefHeight="25.0" prefWidth="57.0" promptText="N &gt; 0" />
+    <Button layoutX="282.0" layoutY="41.0" mnemonicParsing="false" onAction="#genHandle" prefHeight="25.0" prefWidth="102.0" text="Generate Key" />
+    <Label layoutX="411.0" layoutY="20.0" text="KEY Window">
+      <font>
+         <Font name="System Italic" size="12.0" />
+      </font></Label>
+    <Label layoutX="72.0" layoutY="78.0" text="N GRAMA SIZE" />
+    <ScrollPane layoutX="411.0" layoutY="38.0" prefHeight="125.0" prefWidth="205.0">
+        <Text fx:id="keyArea" strokeType="OUTSIDE" strokeWidth="0.0" text="no key">
+         <font>
+            <Font size="18.0" />
+         </font>
         </Text>
     </ScrollPane>
-    <ScrollPane layoutX="39.0" layoutY="219.0" prefHeight="157.0" prefWidth="202.0">
-        <Text fx:id="keyArea1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-            <font>
-                <Font name="System Bold" size="12.0"/>
-            </font>
-        </Text>
-    </ScrollPane>
-    <Label layoutX="39.0" layoutY="202.0" text="ANTIKEY:"/>
-    <ScrollPane layoutX="324.0" layoutY="219.0" prefHeight="157.0" prefWidth="174.0">
-        <Text fx:id="keyArea2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-            <font>
-                <Font name="System Bold" size="12.0"/>
-            </font>
-        </Text>
-    </ScrollPane>
-    <Label layoutX="324.0" layoutY="202.0" text="RESTORED KEY:"/>
-    <Label layoutX="509.0" layoutY="32.0" text="Det:"/>
-    <Label fx:id="deterLabel" layoutX="511.0" layoutY="51.0" text="0">
+    <Label layoutX="496.0" layoutY="20.0" text="Determinant" />
+    <Label fx:id="deterLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="571.0" layoutY="19.0" text="none" textAlignment="CENTER">
         <font>
-          <Font name="System Bold" size="13.0"/>
+          <Font name="System Bold" size="13.0" />
         </font>
     </Label>
+   <Button layoutX="282.0" layoutY="109.0" mnemonicParsing="false" onAction="#openKeyHandle" prefHeight="25.0" prefWidth="102.0" text="Open Key" />
+   <Button layoutX="282.0" layoutY="74.0" mnemonicParsing="false" onAction="#saveKeyHandle" prefHeight="25.0" prefWidth="102.0" text="Save Key" />
+   <Button layoutX="36.0" layoutY="331.0" mnemonicParsing="false" onAction="#cipherHandle" prefHeight="32.0" prefWidth="140.0" text="Cipher" />
+   <Button layoutX="333.0" layoutY="331.0" mnemonicParsing="false" onAction="#decipherHandle" prefHeight="32.0" prefWidth="140.0" text="Decipher" />
+   <TextArea fx:id="cyphText" layoutX="333.0" layoutY="193.0" prefHeight="125.0" prefWidth="291.0" promptText="Ciphered Text" />
+   <TextArea fx:id="origText" layoutX="36.0" layoutY="193.0" prefHeight="125.0" prefWidth="291.0" promptText="Original Text" />
+   <Label layoutX="36.0" layoutY="172.0" text="Original Text Window">
+      <font>
+         <Font name="System Italic" size="12.0" />
+      </font>
+   </Label>
+   <Label layoutX="333.0" layoutY="172.0" text="Crypted Text Window">
+      <font>
+         <Font name="System Italic" size="12.0" />
+      </font>
+   </Label>
 </AnchorPane>
