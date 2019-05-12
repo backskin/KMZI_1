@@ -102,4 +102,14 @@ public class CoderView {
     public void decipherHandle() {
 
     }
+
+    @FXML
+    public void openKeyHandle() {
+
+    }
+
+    @FXML
+    public void saveKeyHandle() {
+
+    }
 }
