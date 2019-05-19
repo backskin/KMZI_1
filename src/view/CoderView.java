@@ -6,30 +6,34 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import logic.Alg;
 import logic.KeyGen;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CoderView {
 
     private KeyGen gen = null;
+    private ArrayList<ArrayList<Integer>> currentKey;
+    private int alphabet = 256;
+    private Stage initStage;
 
-    private void newKey(int gram, int alpha) {
+    private ArrayList<ArrayList<Integer>> newKey(int gram) {
 
-        gen = new KeyGen (gram, alpha);
+        gen = new KeyGen (gram, alphabet);
         gen.generateKey();
+        return gen.getKey();
     }
 
+    public void setStage(Stage stage){
+        initStage = stage;
+    }
 
     public KeyGen getGenerator() {
 
         return gen;
     }
-
-    @FXML
-    private TextField alphaField;
 
     @FXML
     private TextField gramaField;
@@ -64,24 +68,25 @@ public class CoderView {
 
         try {
 
-            if ((gramaField.getText().isEmpty() || alphaField.getText().isEmpty())){
+            if ( gramaField.getText().isEmpty() ){
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Type values!");
+                alert.setContentText("Type value!");
                 alert.showAndWait();
                 return;
             }
 
             int g = Integer.parseInt(gramaField.getText());
-            int a = Integer.parseInt(alphaField.getText());
 
-            if (g < 1 || a < 1)
-                throw new NumberFormatException("Values less than 1");
-            newKey(g,a);
+            if (g < 1)
+                throw new NumberFormatException("Value less than 1");
+
+
+            currentKey = newKey(g);
+
             keyArea.setText(gen.getKeyAsString());
-            deterLabel.setText(Double.toString(Alg.determinant(gen.getKey(), a)));
+            deterLabel.setText(Double.toString(Alg.determinant(gen.getKey(), alphabet)));
             ArrayList<ArrayList<Integer>> antikey = gen.antikey();
-
         }
 
         catch (NumberFormatException e){
@@ -106,10 +111,13 @@ public class CoderView {
     @FXML
     public void openKeyHandle() {
 
+        currentKey = FileHandler.loadKey(initStage);
+        keyArea.setText(KeyGen.getKeyAsString(currentKey));
     }
 
     @FXML
     public void saveKeyHandle() {
 
+        FileHandler.saveKey(initStage, gen.getKey());
     }
 }

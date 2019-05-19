@@ -18,30 +18,17 @@ public class KeyGen {
         key = new ArrayList<>();
     }
 
-
-    public void printkey(int match){
-
-        for (int i = 0; i < key.size(); i++) {
-            System.out.print("\n" + (i == match ? ">" : ""));
-
-            for (int j = 0; j < key.get(i).size(); j++) {
-                System.out.print(" " + key.get(i).get(j));
-            }
-
-
-        }
-        System.out.println("\n");
-    }
-
     public String getKeyAsString(){
 
-        StringBuilder output = new StringBuilder();
+        return getKeyAsString(key);
+
+        /*StringBuilder output = new StringBuilder();
         for (ArrayList<Integer> ints : key) {
             output.append("\n");
-            for (Integer anInt : ints) output.append(" ").append(anInt);
+            for (Integer anInt : ints) output.append(" ").append((char)anInt.intValue());
         }
         output.append("\n");
-        return output.toString();
+        return output.toString();*/
     }
 
     public static String getKeyAsString(ArrayList<ArrayList<Integer>> key){
@@ -49,7 +36,7 @@ public class KeyGen {
         StringBuilder output = new StringBuilder();
         for (ArrayList<Integer> ints : key) {
             output.append("\n");
-            for (Integer anInt : ints) output.append(" ").append(anInt);
+            for (Integer anInt : ints) output.append(" ").append(anInt.intValue());
         }
         output.append("\n");
         return output.toString();

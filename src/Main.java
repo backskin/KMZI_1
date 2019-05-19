@@ -14,6 +14,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/CoderView.fxml"));
         Parent root = loader.load();
         CoderView CVCon = loader.getController();
+        CVCon.setStage(primaryStage);
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
