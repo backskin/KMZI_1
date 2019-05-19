@@ -23,6 +23,5 @@ public class Cipherator {
         }};
 
         return null;
-        
     }
 }
