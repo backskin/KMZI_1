@@ -85,7 +85,7 @@ public class Alg {
         }};
     }
 
-    static ArrayList<ArrayList<Double>> mulM(ArrayList<ArrayList<Double>> a, Double b){
+    private static ArrayList<ArrayList<Double>> mulM(ArrayList<ArrayList<Double>> a, Double b){
 
         return new ArrayList<ArrayList<Double>>(){{
             for (ArrayList<Double> doubs : a) add(mul(doubs,b));

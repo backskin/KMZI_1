@@ -2,7 +2,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import view.CoderView;
 
@@ -15,7 +14,7 @@ public class Main extends Application {
         Parent root = loader.load();
         CoderView CVCon = loader.getController();
         CVCon.setStage(primaryStage);
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("КМЗИ Лаб. работа 1-18");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
