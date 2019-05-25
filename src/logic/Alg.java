@@ -113,10 +113,11 @@ public class Alg {
                 for (int j = 0; j < y.get(i).size(); j++){
 
                     get(i).add(0);
+
                     for (int k = 0; k < x.get(i).size(); k ++)
                         get(i).set(j,
-                                get(i).get(j)
-                                        + x.get(i).get(k) * y.get(k).get(j));
+                                mod(get(i).get(j)
+                                        + x.get(i).get(k) * y.get(k).get(j), mod));
                 }
             }
         }};
@@ -324,7 +325,7 @@ public class Alg {
         }};
     }
 
-    static ArrayList<ArrayList<Integer>> invert(ArrayList<ArrayList<Integer>> m, int mod){
+    public static ArrayList<ArrayList<Integer>> invert(ArrayList<ArrayList<Integer>> m, int mod){
 
         ArrayList<ArrayList<Integer>> algAdd = algAddMatrix(m, mod);
         int det = determinant(m, mod);

@@ -1,13 +1,11 @@
 package view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.Alg;
+import logic.Cipherator;
 import logic.KeyGen;
 
 import java.util.ArrayList;
@@ -16,23 +14,17 @@ public class CoderView {
 
     private KeyGen gen = null;
     private ArrayList<ArrayList<Integer>> currentKey;
-    private int alphabet = 256;
     private Stage initStage;
 
     private ArrayList<ArrayList<Integer>> newKey(int gram) {
 
-        gen = new KeyGen (gram, alphabet);
+        gen = new KeyGen (gram);
         gen.generateKey();
         return gen.getKey();
     }
 
     public void setStage(Stage stage){
         initStage = stage;
-    }
-
-    public KeyGen getGenerator() {
-
-        return gen;
     }
 
     @FXML
@@ -42,19 +34,26 @@ public class CoderView {
     private Text keyArea;
 
     @FXML
-    private TextArea cyphText;
+    private TextArea origText;
 
     @FXML
-    private TextArea origText;
+    private TextArea cyphText;
 
     @FXML
     private Label deterLabel;
 
+    @FXML
+    private Button cButton;
+
+    @FXML
+    private Button dButton;
 
     @FXML
     private void initialize(){
 
         keyArea.setText("");
+        cButton.setDisable(true);
+        dButton.setDisable(true);
 
     }
 
@@ -85,8 +84,9 @@ public class CoderView {
             currentKey = newKey(g);
 
             keyArea.setText(gen.getKeyAsString());
-            deterLabel.setText(Double.toString(Alg.determinant(gen.getKey(), alphabet)));
-            ArrayList<ArrayList<Integer>> antikey = gen.antikey();
+            deterLabel.setText(Double.toString(Alg.determinant(gen.getKey(), KeyGen.alphabetPower)));
+            cButton.setDisable(false);
+            dButton.setDisable(false);
         }
 
         catch (NumberFormatException e){
@@ -101,11 +101,15 @@ public class CoderView {
     @FXML
     public void cipherHandle() {
 
+        if (!origText.getText().isEmpty())
+            cyphText.setText(Cipherator.cip(origText.getText(), currentKey));
     }
 
     @FXML
     public void decipherHandle() {
 
+        if (!cyphText.getText().isEmpty())
+            origText.setText(Cipherator.desip(cyphText.getText(), currentKey));
     }
 
     @FXML

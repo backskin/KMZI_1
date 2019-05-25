@@ -7,40 +7,49 @@ public class KeyGen {
 
     private ArrayList<ArrayList<Integer>> key;
 
-    private int alphabetPower;
+    public static int alphabetPower = 256;
     private int gramaPower;
 
 
-    public KeyGen(int gramma, int alphabet){
+    public KeyGen(int gramma){
 
         this.gramaPower = gramma;
-        this.alphabetPower = alphabet;
         key = new ArrayList<>();
     }
 
     public String getKeyAsString(){
 
         return getKeyAsString(key);
-
-        /*StringBuilder output = new StringBuilder();
-        for (ArrayList<Integer> ints : key) {
-            output.append("\n");
-            for (Integer anInt : ints) output.append(" ").append((char)anInt.intValue());
-        }
-        output.append("\n");
-        return output.toString();*/
     }
 
     public static String getKeyAsString(ArrayList<ArrayList<Integer>> key){
 
         StringBuilder output = new StringBuilder();
         for (ArrayList<Integer> ints : key) {
+
+            for (Integer anInt : ints) {
+                output.append(" ").append(anInt.intValue());
+            }
+
             output.append("\n");
-            for (Integer anInt : ints) output.append(" ").append(anInt.intValue());
         }
-        output.append("\n");
         return output.toString();
     }
+
+    public static String getKeyAsStringChars(ArrayList<ArrayList<Integer>> key){
+
+        StringBuilder output = new StringBuilder();
+        for (ArrayList<Integer> ints : key) {
+
+            for (Integer anInt : ints){
+                output.append(" ").append( (char) anInt.intValue());
+            }
+
+            output.append("\n");
+        }
+        return output.toString();
+    }
+
 
     public void generateKey(){
 
@@ -60,14 +69,9 @@ public class KeyGen {
         }
     }
 
-    public static ArrayList<ArrayList<Integer>> antikey(ArrayList<ArrayList<Integer>> key, int mod){
+    static ArrayList<ArrayList<Integer>> antikey(ArrayList<ArrayList<Integer>> key, int mod){
 
         return Alg.invert(key, mod);
-    }
-
-    public ArrayList<ArrayList<Integer>> antikey(){
-
-        return Alg.invert(key, alphabetPower);
     }
 
     public ArrayList<ArrayList<Integer>> getKey() {
