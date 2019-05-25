@@ -5,15 +5,15 @@ import java.util.Random;
 
 public class KeyGen {
 
-    private ArrayList<ArrayList<Integer>> key;
+    private ArrayList<ArrayList<Long>> key;
 
-    public static int alphabetPower = 256;
-    private int gramaPower;
+    public static int alphabet = 65536;
+    private int grama;
 
 
     public KeyGen(int gramma){
 
-        this.gramaPower = gramma;
+        this.grama = gramma;
         key = new ArrayList<>();
     }
 
@@ -22,13 +22,13 @@ public class KeyGen {
         return getKeyAsString(key);
     }
 
-    public static String getKeyAsString(ArrayList<ArrayList<Integer>> key){
+    public static String getKeyAsString(ArrayList<ArrayList<Long>> key){
 
         StringBuilder output = new StringBuilder();
-        for (ArrayList<Integer> ints : key) {
+        for (ArrayList<Long> ints : key) {
 
-            for (Integer anInt : ints) {
-                output.append(" ").append(anInt.intValue());
+            for (Long aLong : ints) {
+                output.append(" ").append(aLong.intValue());
             }
 
             output.append("\n");
@@ -36,13 +36,13 @@ public class KeyGen {
         return output.toString();
     }
 
-    public static String getKeyAsStringChars(ArrayList<ArrayList<Integer>> key){
+    static String getKeyAsStringChars(ArrayList<ArrayList<Long>> key){
 
         StringBuilder output = new StringBuilder();
-        for (ArrayList<Integer> ints : key) {
+        for (ArrayList<Long> ints : key) {
 
-            for (Integer anInt : ints){
-                output.append(" ").append( (char) anInt.intValue());
+            for (Long aLong : ints){
+                output.append(" ").append( (char) aLong.intValue());
             }
 
             output.append("\n");
@@ -53,28 +53,36 @@ public class KeyGen {
 
     public void generateKey(){
 
-        key = Alg.getEMInt(gramaPower);
+        key = Alg.getEMInt(grama);
 
         Random random = new Random();
+
         for (int i = 0; i < 100; i++){
 
             int randRow = random.nextInt(key.size());
-            int randMul = random.nextInt(alphabetPower);//-alphabetPower;
+
+            long randMul = random.nextInt(alphabet);
+
             randMul = randMul == 0 ? 1 : randMul;
 
             for (int j = 0; j < key.size(); j++) {
-                if (j != randRow)
-                    key.set(j, Alg.sum(key.get(j), Alg.mul(key.get(randRow), randMul, alphabetPower), alphabetPower));
+
+                if (j != randRow){
+
+                    ArrayList<Long> longs = Alg.mul(key.get(randRow), randMul, alphabet);
+
+                    key.set(j, Alg.sum(key.get(j), longs, alphabet));
+                }
             }
         }
     }
 
-    static ArrayList<ArrayList<Integer>> antikey(ArrayList<ArrayList<Integer>> key, int mod){
+    static ArrayList<ArrayList<Long>> antikey(ArrayList<ArrayList<Long>> key){
 
-        return Alg.invert(key, mod);
+        return Alg.invert(key, alphabet);
     }
 
-    public ArrayList<ArrayList<Integer>> getKey() {
+    public ArrayList<ArrayList<Long>> getKey() {
         return key;
     }
 }

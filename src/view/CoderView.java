@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class CoderView {
 
     private KeyGen gen = null;
-    private ArrayList<ArrayList<Integer>> currentKey;
+    private ArrayList<ArrayList<Long>> currentKey;
     private Stage initStage;
 
-    private ArrayList<ArrayList<Integer>> newKey(int gram) {
+    private ArrayList<ArrayList<Long>> newKey(int gram) {
 
         gen = new KeyGen (gram);
         gen.generateKey();
@@ -84,7 +84,7 @@ public class CoderView {
             currentKey = newKey(g);
 
             keyArea.setText(gen.getKeyAsString());
-            deterLabel.setText(Double.toString(Alg.determinant(gen.getKey(), KeyGen.alphabetPower)));
+            deterLabel.setText(Double.toString(Alg.determinant(gen.getKey(), KeyGen.alphabet)));
             cButton.setDisable(false);
             dButton.setDisable(false);
         }
@@ -102,6 +102,7 @@ public class CoderView {
     public void cipherHandle() {
 
         if (!origText.getText().isEmpty())
+
             cyphText.setText(Cipherator.cip(origText.getText(), currentKey));
     }
 

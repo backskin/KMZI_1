@@ -2,63 +2,60 @@ package logic;
 
 import java.util.ArrayList;
 
-import static logic.Alg.mul;
-
 public class Cipherator {
 
+    private static ArrayList<ArrayList<Long>> getVectorsFromText(String text, int keySize){
 
+        ArrayList<ArrayList<Long>> out = new ArrayList<>();
 
-    private static ArrayList<ArrayList<Integer>> getVectorsFromText(String text, int keySize){
-        
-        ArrayList<ArrayList<Integer>> vectors = new ArrayList<ArrayList<Integer>>(){{
+        for (int i = 0; i < Math.ceil((double) text.length() / keySize); i++) {
 
-            for (int i = 0; i < Math.round((double) text.length() / keySize); i++) {
+            out.add(new ArrayList<>());
 
-                add(new ArrayList<>());
+            int r = text.length() > (i+1) * keySize ? keySize : text.length() - i * keySize;
 
-                int r = text.length() > (i+1) * keySize ? (i+1)*keySize : text.length()-1;
+            for (int j = 0; j < keySize; j++) {
 
-                char[] chars = new char[keySize];
+                if (r > j)
 
-                text.getChars(i*keySize, r, chars, 0);
-                for (int j = 0; j < keySize; j++) {
-
-                    if (chars.length - 1 > j )
-                        get(i).add((int)chars[j]);
-                    else
-                        get(i).add((int)' ');
-                }
+                    out.get(i).add((long) text.charAt(i*keySize + j));
+                else
+                    out.get(i).add((long) ' ');
             }
-        }};
-
-        return vectors;
+        }
+        return out;
     }
 
-    public static String getTextFromVectors(ArrayList<ArrayList<Integer>> vectors){
+    private static String getTextFromVectors(ArrayList<ArrayList<Long>> vectors){
 
         StringBuilder output = new StringBuilder();
 
-        for (int i = 0; i < vectors.size(); i++) {
+        for (ArrayList<Long> vector : vectors) {
 
-            for (int j = 0; j < vectors.get(i).size(); j++) {
-                output.append((char)vectors.get(i).get(j).intValue());
+            for (Long aLong : vector) {
+
+                output.append((char) aLong.intValue());
             }
         }
 
         return output.toString();
     }
 
-    public static String cip(String source, ArrayList<ArrayList<Integer>> key){
+    public static String cip(String src, ArrayList<ArrayList<Long>> key){
 
-        ArrayList<ArrayList<Integer>> vectors = getVectorsFromText(source,KeyGen.alphabetPower);
+        ArrayList<ArrayList<Long>> vectors = getVectorsFromText(src,key.size());
 
-        System.out.println(KeyGen.getKeyAsStringChars(vectors));
+        vectors = Alg.mul(vectors,key,KeyGen.alphabet);
 
-        return null;
+        return getTextFromVectors(vectors);
     }
 
-    public static String desip(String cip, ArrayList<ArrayList<Integer>> key){
+    public static String desip(String cipher, ArrayList<ArrayList<Long>> key){
 
-        return getTextFromVectors(Alg.getTrans(mul(getVectorsFromText(cip, key.size()), KeyGen.antikey(key, KeyGen.alphabetPower), KeyGen.alphabetPower),KeyGen.alphabetPower));
+        ArrayList<ArrayList<Long>> vectors = getVectorsFromText(cipher, key.size());
+
+        vectors = Alg.mul(vectors,KeyGen.antikey(key),KeyGen.alphabet);
+
+        return getTextFromVectors(vectors);
     }
 }

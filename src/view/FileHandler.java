@@ -7,14 +7,14 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 
-public class FileHandler {
+class FileHandler {
 
-    public static ArrayList<ArrayList<Integer>> loadKey(final Stage ownerStage){
+    static ArrayList<ArrayList<Long>> loadKey(final Stage ownerStage){
 
         return openIt(chooseFileToLoad(ownerStage));
     }
 
-    public static void saveKey(final Stage ownerStage, ArrayList<ArrayList<Integer>> key){
+    static void saveKey(final Stage ownerStage, ArrayList<ArrayList<Long>> key){
 
         saveIt(chooseFileToSave(ownerStage), key);
     }
@@ -46,11 +46,11 @@ public class FileHandler {
         return fileChooser.showOpenDialog(ownerStage);
     }
 
-    private static ArrayList<ArrayList<Integer>> openIt(File file){
+    private static ArrayList<ArrayList<Long>> openIt(File file){
 
         try {
             if (file == null) return null;
-            ArrayList<ArrayList<Integer>> output = new ArrayList<>();
+            ArrayList<ArrayList<Long>> output = new ArrayList<>();
             FileInputStream fis = new FileInputStream(file.getAbsolutePath());
             ArrayList<Integer> bytethread = new ArrayList<>();
             int length = fis.available();
@@ -64,7 +64,7 @@ public class FileHandler {
                 output.add(new ArrayList<>());
                 for (int j = 0; j < Math.sqrt(length); j++) {
 
-                    output.get(i).add(bytethread.get((int)(i*Math.sqrt(length)) + j));
+                    output.get(i).add(bytethread.get((int)(i*Math.sqrt(length)) + j).longValue());
                 }
 
             }
@@ -79,15 +79,15 @@ public class FileHandler {
         }
     }
 
-    private static void saveIt(File file, ArrayList<ArrayList<Integer>> key){
+    private static void saveIt(File file, ArrayList<ArrayList<Long>> key){
 
         FileOutputStream fos;
         try {
             fos = new FileOutputStream(file.getAbsolutePath());
-            for (ArrayList<Integer> integers : key) {
+            for (ArrayList<Long> Longs : key) {
 
-                for (Integer integer : integers)
-                    fos.write(integer.byteValue());
+                for (Long Long : Longs)
+                    fos.write(Long.byteValue());
 
             }
             fos.close();
