@@ -117,7 +117,12 @@ public class CoderView {
     public void openKeyHandle() {
 
         currentKey = FileHandler.loadKey(initStage);
-        keyArea.setText(KeyGen.getKeyAsString(currentKey));
+
+        if (currentKey != null) {
+            keyArea.setText(KeyGen.getKeyAsString(currentKey));
+            gramaField.setText("" + currentKey.size());
+            deterLabel.setText("" + Alg.determinant(currentKey, KeyGen.alphabet));
+        }
     }
 
     @FXML

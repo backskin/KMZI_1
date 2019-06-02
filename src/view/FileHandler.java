@@ -5,6 +5,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 class FileHandler {
@@ -48,47 +49,61 @@ class FileHandler {
 
     private static ArrayList<ArrayList<Long>> openIt(File file){
 
-        try {
+        return null;
+
+        /* Очень непонятно пока мне, как адекватно писать и читать лонги в файле
+            Поэтому функция сохранения\загрузки ключа пока недоступна :(
+        * */
+
+       /* try {
             if (file == null) return null;
             ArrayList<ArrayList<Long>> output = new ArrayList<>();
             FileInputStream fis = new FileInputStream(file.getAbsolutePath());
-            ArrayList<Integer> bytethread = new ArrayList<>();
+            output.add(new ArrayList<>());
             int length = fis.available();
-            for (int i = 0; i < length; i++) {
+            int j = 0;
+            for (int i = 0; i < length / 4; i++) {
 
-                bytethread.add(fis.read());
-            }
-
-            for (int i = 0; i < Math.sqrt(length); i++) {
-
-                output.add(new ArrayList<>());
-                for (int j = 0; j < Math.sqrt(length); j++) {
-
-                    output.get(i).add(bytethread.get((int)(i*Math.sqrt(length)) + j).longValue());
+                if (output.get(j).size() == (int)Math.sqrt(length / 4)){
+                    output.add(new ArrayList<>());
+                    j++;
                 }
 
-            }
-            return output;
+                byte[] array = new byte[Long.BYTES];
 
+                for (int k = 0; k < Long.BYTES; k++) {
+                    array[k] = (byte)fis.read();
+                }
+
+                output.get(j).add(ByteBuffer.wrap(array).getLong());
+            }
+
+            return output;
 
         } catch (IOException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Load Failed");
-            alert.showAndWait();
+            alert.show();
             return null;
-        }
+        }*/
     }
 
     private static void saveIt(File file, ArrayList<ArrayList<Long>> key){
 
-        FileOutputStream fos;
+        /*FileOutputStream fos;
         try {
             fos = new FileOutputStream(file.getAbsolutePath());
+
             for (ArrayList<Long> Longs : key) {
 
-                for (Long Long : Longs)
-                    fos.write(Long.byteValue());
+                for (Long aLong: Longs){
 
+                    for (byte i : (ByteBuffer.allocate(Long.BYTES)
+                            .putLong(aLong).array())) {
+
+                        fos.write(i);
+                    }
+                }
             }
             fos.close();
 
@@ -96,8 +111,8 @@ class FileHandler {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Saving Failed");
-            alert.showAndWait();
-        }
+            alert.show();
+        }*/
 
     }
 }

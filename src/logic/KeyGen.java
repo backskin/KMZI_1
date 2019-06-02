@@ -38,6 +38,8 @@ public class KeyGen {
 
     static String getKeyAsStringChars(ArrayList<ArrayList<Long>> key){
 
+        if (key == null) return null;
+
         StringBuilder output = new StringBuilder();
         for (ArrayList<Long> ints : key) {
 
